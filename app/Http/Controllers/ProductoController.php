@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
 class ProductoController extends Controller
 {
@@ -27,17 +29,41 @@ class ProductoController extends Controller
     //Guardar producto
     public function guardarProducto(Request $request)
     {
-        $producto = new Producto();
-        $producto->producto_id = ProductoController::productId();
-        $producto->producto_nombre = $request->producto_nombre;
-        $producto->producto_descripcion = $request->producto_descripcion;
-        $producto->producto_categoria = $request->producto_categoria;
-        $producto->producto_precio_compra = $request->producto_precio_compra;
-        $producto->producto_precio_venta = $request->producto_precio_venta;
-        $producto->producto_stock = $request->producto_stock;
-        $producto->producto_fecha_registro = $request->producto_fecha_registro;
-        $producto->producto_imagen = $request->producto_imagen;
-        $producto->save();
+        //Para comentar codigo : Alt + Shfit + A
+
+        //Para el primer registro: A0001
+        $productos = Producto::all();
+        $json = json_decode($productos, true);
+        $cantidad = count($json);
+        if ($cantidad <= 0) {
+            $producto = new Producto();
+            $producto->producto_id = 'A0001';
+            $producto->producto_nombre = $request->producto_nombre;
+            $producto->producto_descripcion = $request->producto_descripcion;
+            $producto->producto_categoria = $request->producto_categoria;
+            $producto->producto_precio_compra = $request->producto_precio_compra;
+            $producto->producto_precio_venta = $request->producto_precio_venta;
+            $producto->producto_stock = $request->producto_stock;
+            $producto->producto_fecha_registro = $request->producto_fecha_registro;
+            $producto->producto_imagen = $request->producto_imagen;
+            $producto->save();
+        } else {
+            //Llamando al procedimiento almacenado
+            $now = Carbon::now();
+            DB::select('call myStoredProcedure_grabarProducto(?,?,?,?,?,?,?,?,?,?)', array(
+                $request->producto_nombre,
+                $request->producto_descripcion,
+                $request->producto_categoria,
+                $request->producto_precio_compra,
+                $request->producto_precio_venta,
+                $request->producto_stock,
+                $request->producto_fecha_registro,
+                $request->producto_imagen,
+                $now,
+                $now
+            ));
+        }
+
 
         $msm = "Producto registrado.";
         return response()->json($msm);
