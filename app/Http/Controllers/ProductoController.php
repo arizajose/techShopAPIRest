@@ -98,7 +98,9 @@ class ProductoController extends Controller
         return response()->json($producto);
     }
 
-    //Id de producto: cadena alfanumerica aleatoria de 5 caracteres única.
+     //Id de producto: cadena alfanumerica aleatoria de 5 caracteres única.
+    //Las funciones se referencian con nombre_clase::nombre_funcion;
+    //$venta->venta_id = VentaController::productId();
     public function productId()
     {
         $cod = '';

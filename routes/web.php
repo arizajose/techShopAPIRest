@@ -71,6 +71,8 @@ $router->post('/comprobantes', 'ComprobanteController@guardarComprobante');
 //URIs para Ventas
 $router->get('/ventas', 'VentaController@getVentas');
 $router->get('/ventas/{id}', 'VentaController@getVentaById');
+$router->get('/ventas-detalle', 'VentaController@getVentasDetalle');
+$router->get('/ventas-detalle/{id}', 'VentaController@getVentaDetalleById');
 $router->post('/ventas', 'VentaController@guardarVenta');
 $router->delete('/ventas/{id}', 'VentaController@deleteVentaById');
 $router->put('/ventas/{id}', 'VentaController@updateVentaById');
