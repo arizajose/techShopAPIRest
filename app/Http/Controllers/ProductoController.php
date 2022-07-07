@@ -95,7 +95,9 @@ class ProductoController extends Controller
         $producto->producto_imagen = $request->input('producto_imagen');
 
         $producto->save();
-        return response()->json($producto);
+
+        $msm = "Producto Modificado.";
+        return response()->json($msm);
     }
 
      //Id de producto: cadena alfanumerica aleatoria de 5 caracteres única.

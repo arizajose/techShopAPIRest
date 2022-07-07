@@ -135,10 +135,10 @@ class VentaController extends Controller
         $venta = Venta::find($id);
         if ($venta) {
             $venta->delete();
-            $msm = "Producto eliminado.";
+            $msm = "Venta eliminada.";
             return response()->json($msm);
         } else {
-            $msm = "Producto no registrado en el sistema.";
+            $msm = "Venta no registrada en el sistema.";
             return response()->json($msm);
         }
     }
@@ -154,7 +154,18 @@ class VentaController extends Controller
         $venta->venta_empleado = $request->input('venta_empleado');
         $venta->venta_tipo_comprobante = $request->input('venta_tipo_comprobante');
         $venta->save();
-        return response()->json($venta);
+
+        $msm = "Venta Modificada.";
+        return response()->json($msm);
     }
 
+    //Venta por Mes
+    public function getVentaPorMes($idyear)
+    {
+        $data = DB::select('call myStoredProcedure_ObtenerVentasPorMes(?)', array($idyear));
+        $json = json_encode($data, true);
+        $array = json_decode($json,true);
+
+        return response()->json($array);
+    }
 }

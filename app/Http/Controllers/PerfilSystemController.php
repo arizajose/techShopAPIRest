@@ -38,7 +38,7 @@ class PerfilSystemController extends Controller
 
         $perfilsystem->save();
 
-        $msm = "Producto registrado.";
+        $msm = "PerfilSystem registrado.";
         return response()->json($msm);
     }
 }
