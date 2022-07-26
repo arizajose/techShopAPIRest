@@ -95,3 +95,9 @@ $router->get('/facturas/{id}', 'FacturaController@getFacturaById');
 $router->post('/facturas', 'FacturaController@guardarFactura');
 $router->delete('/facturas/{id}', 'FacturaController@deleteFacturaById');
 $router->put('/facturas/{id}', 'FacturaController@updateFacturaById');
+
+//URIs para JWT Clientes
+$router->post('/clientes/login','ClienteController@login');
+$router->post('/clientes/logout','ClienteController@logout');
+$router->post('/clientes/refresh','ClienteController@refresh');
+
